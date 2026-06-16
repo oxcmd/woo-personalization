@@ -42,7 +42,8 @@ class WCP_Admin_Order {
 
 		$mockup_url = WCP_Cart_Order::get_order_mockup_url( $item );
 		$order_id   = $item->get_order_id();
-		$download   = self::get_download_url( $order_id, $item_id, 'original' );
+		$original   = self::get_download_url( $order_id, $item_id, 'original' );
+		$mockup_dl  = self::get_download_url( $order_id, $item_id, 'mockup' );
 
 		echo '<div class="wcp-order-personalization">';
 		echo '<p><strong>' . esc_html__( 'Personalized design', 'woo-personalization' ) . '</strong></p>';
@@ -52,10 +53,16 @@ class WCP_Admin_Order {
 			echo '<a href="' . esc_url( $mockup_url ) . '" target="_blank" rel="noopener noreferrer">';
 			echo '<img src="' . esc_url( $mockup_url ) . '" alt="' . esc_attr__( 'Mockup preview', 'woo-personalization' ) . '" class="wcp-order-mockup-thumb" />';
 			echo '</a></p>';
+		} else {
+			echo '<p class="wcp-admin-warning">' . esc_html__( 'Mockup preview file is unavailable for this order item.', 'woo-personalization' ) . '</p>';
 		}
 
-		if ( $download ) {
-			echo '<p><a class="button" href="' . esc_url( $download ) . '">' . esc_html__( 'Download original upload', 'woo-personalization' ) . '</a></p>';
+		if ( $original ) {
+			echo '<p><a class="button" href="' . esc_url( $original ) . '">' . esc_html__( 'Download original upload', 'woo-personalization' ) . '</a></p>';
+		}
+
+		if ( $mockup_dl ) {
+			echo '<p><a class="button" href="' . esc_url( $mockup_dl ) . '">' . esc_html__( 'Download mockup preview', 'woo-personalization' ) . '</a></p>';
 		}
 
 		echo '</div>';
@@ -71,6 +78,19 @@ class WCP_Admin_Order {
 	 */
 	public static function get_download_url( $order_id, $item_id, $type = 'original' ) {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return false;
+		}
+
+		$item = WC_Order_Factory::get_order_item( $item_id );
+		if ( ! $item instanceof WC_Order_Item_Product ) {
+			return false;
+		}
+
+		$path = 'mockup' === $type
+			? WCP_Cart_Order::get_order_mockup_path( $item )
+			: WCP_Cart_Order::get_order_original_path( $item );
+
+		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return false;
 		}
 
@@ -112,8 +132,9 @@ class WCP_Admin_Order {
 			wp_die( esc_html__( 'Order item not found.', 'woo-personalization' ), 404 );
 		}
 
-		$meta_key = 'mockup' === $type ? '_wcp_order_mockup_path' : '_wcp_order_original_path';
-		$path     = $item->get_meta( $meta_key );
+		$path = 'mockup' === $type
+			? WCP_Cart_Order::get_order_mockup_path( $item )
+			: WCP_Cart_Order::get_order_original_path( $item );
 
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			wp_die( esc_html__( 'File not found.', 'woo-personalization' ), 404 );

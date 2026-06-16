@@ -182,7 +182,8 @@ class WCP_Plugin {
 	 * @return string
 	 */
 	public static function get_temp_dir( $token ) {
-		$path = trailingslashit( self::get_upload_base_path() ) . WCP_TEMP_DIR . '/' . sanitize_file_name( $token );
+		$token = sanitize_key( $token );
+		$path  = trailingslashit( self::get_upload_base_path() ) . WCP_TEMP_DIR . '/' . $token;
 
 		if ( ! file_exists( $path ) ) {
 			wp_mkdir_p( $path );

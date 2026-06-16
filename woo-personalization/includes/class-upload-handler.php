@@ -66,7 +66,7 @@ class WCP_Upload_Handler {
 			wp_send_json_error( array( 'message' => __( 'Mockup template is misconfigured.', 'woo-personalization' ) ), 500 );
 		}
 
-		$token   = wp_generate_password( 32, false, false );
+		$token    = sanitize_key( wp_generate_password( 32, false, false ) );
 		$temp_dir = WCP_Plugin::get_temp_dir( $token );
 
 		$ext           = $validated['ext'];
@@ -154,7 +154,7 @@ class WCP_Upload_Handler {
 
 		$meta = get_transient( 'wcp_upload_' . $token );
 		if ( ! is_array( $meta ) ) {
-			$meta_path = trailingslashit( WCP_Plugin::get_temp_dir( $token ) ) . 'meta.json';
+			$meta_path = trailingslashit( self::resolve_token_dir( $token ) ) . 'meta.json';
 			if ( file_exists( $meta_path ) ) {
 				$decoded = json_decode( file_get_contents( $meta_path ), true );
 				$meta    = is_array( $decoded ) ? $decoded : null;
@@ -172,6 +172,39 @@ class WCP_Upload_Handler {
 	 */
 	public static function get_token_dir( $token ) {
 		return WCP_Plugin::get_temp_dir( sanitize_key( $token ) );
+	}
+
+	/**
+	 * Resolve temp directory even when legacy tokens used mixed case.
+	 *
+	 * @param string $token Upload token.
+	 * @return string
+	 */
+	public static function resolve_token_dir( $token ) {
+		$token   = sanitize_key( $token );
+		$default = self::get_token_dir( $token );
+
+		if ( is_dir( $default ) ) {
+			return $default;
+		}
+
+		$base = trailingslashit( WCP_Plugin::get_upload_base_path() ) . WCP_TEMP_DIR;
+		if ( ! is_dir( $base ) ) {
+			return $default;
+		}
+
+		$directories = glob( trailingslashit( $base ) . '*', GLOB_ONLYDIR );
+		if ( ! is_array( $directories ) ) {
+			return $default;
+		}
+
+		foreach ( $directories as $directory ) {
+			if ( strtolower( basename( $directory ) ) === $token ) {
+				return $directory;
+			}
+		}
+
+		return $default;
 	}
 
 	/**
