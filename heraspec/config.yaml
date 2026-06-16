@@ -1,0 +1,8 @@
+projectType: wordpress-plugin
+projectName: "Woo Personalization"
+description: "WooCommerce t-shirt personalization plugin with mockup preview and order file storage"
+skills:
+  - activation-hook
+  - ajax-handler
+  - meta-box
+  - admin-menu-item

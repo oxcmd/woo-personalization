@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "description": "HeRaSpec Knowledge Base — Pre-analyzed profiles for frameworks, APIs, and platforms",
+  "categories": ["frameworks", "apis", "platforms"],
+  "entries": [
+    {
+      "id": "php-laravel-botble",
+      "category": "frameworks",
+      "runtime": "php",
+      "framework": "laravel",
+      "cms": "botble",
+      "frameworkVersion": "^13.0",
+      "runtimeVersion": "^8.3",
+      "matchSignals": [
+        { "type": "file-contains", "file": "composer.json", "contains": "botble" },
+        { "type": "file-contains", "file": "composer.json", "contains": "laravel/framework" },
+        { "type": "directory-exists", "path": "platform/core" },
+        { "type": "directory-exists", "path": "platform/plugins" }
+      ],
+      "minMatchScore": 3,
+      "knowledgePath": "frameworks/php/laravel/botble",
+      "files": ["profile.json", "structure.md"],
+      "lastUpdated": "2026-04-04"
+    },
+    {
+      "id": "php-codeigniter-rise-cms",
+      "category": "frameworks",
+      "runtime": "php",
+      "framework": "codeigniter",
+      "cms": "rise-cms",
+      "frameworkVersion": "^4.0",
+      "runtimeVersion": "^8.1",
+      "matchSignals": [
+        { "type": "file-contains", "file": "index.php", "contains": "CodeIgniter\\Boot::bootWeb()" },
+        { "type": "file-contains", "file": "app/Config/Rise.php", "contains": "app_version" },
+        { "type": "directory-exists", "path": "plugins" },
+        { "type": "directory-exists", "path": "app/Controllers" }
+      ],
+      "minMatchScore": 3,
+      "knowledgePath": "frameworks/php/codeigniter/rise-cms",
+      "files": ["profile.json", "structure.md"],
+      "lastUpdated": "2026-04-04"
+    },
+    {
+      "id": "php-wordpress-core",
+      "category": "frameworks",
+      "runtime": "php",
+      "framework": "wordpress",
+      "cms": "wordpress",
+      "frameworkVersion": "^6.0",
+      "runtimeVersion": ">=7.2.24",
+      "matchSignals": [
+        { "type": "file-contains", "file": "wp-includes/version.php", "contains": "$wp_version" },
+        { "type": "file-contains", "file": "wp-config.php", "contains": "DB_NAME" },
+        { "type": "directory-exists", "path": "wp-content" },
+        { "type": "directory-exists", "path": "wp-includes" },
+        { "type": "directory-exists", "path": "wp-admin" }
+      ],
+      "minMatchScore": 3,
+      "knowledgePath": "frameworks/php/wordpress/core",
+      "files": ["profile.json", "structure.md"],
+      "lastUpdated": "2026-05-03"
+    }
+  ]
+}

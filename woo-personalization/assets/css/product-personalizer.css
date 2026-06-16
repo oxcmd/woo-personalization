@@ -1,0 +1,80 @@
+.wcp-personalizer {
+	margin: 1.5rem 0;
+	padding: 1rem;
+	border: 1px solid #e5e5e5;
+	border-radius: 8px;
+	background: #fafafa;
+}
+
+.wcp-personalizer h4 {
+	margin: 0 0 1rem;
+}
+
+.wcp-preview-stage {
+	position: relative;
+	max-width: 420px;
+	margin-bottom: 1rem;
+}
+
+.wcp-base-image {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.wcp-design-overlay {
+	position: absolute;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.wcp-design-overlay .wcp-design-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: none;
+}
+
+.wcp-design-overlay .wcp-design-image.is-visible {
+	display: block;
+}
+
+.wcp-design-overlay.fit-contain .wcp-design-image {
+	object-fit: contain;
+}
+
+.wcp-print-area-guide {
+	position: absolute;
+	border: 1px dashed rgba(0, 0, 0, 0.25);
+	pointer-events: none;
+}
+
+.wcp-controls {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.wcp-upload-label input[type="file"] {
+	display: block;
+	margin-top: 0.35rem;
+}
+
+.wcp-status {
+	margin: 0;
+	min-height: 1.25rem;
+	font-size: 0.9rem;
+}
+
+.wcp-status.is-error {
+	color: #b32d2e;
+}
+
+.wcp-status.is-success {
+	color: #007017;
+}
+
+.wcp-cart-mockup-thumb {
+	max-width: 80px;
+	height: auto;
+}

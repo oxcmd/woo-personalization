@@ -1,0 +1,22 @@
+# Local WordPress site (Local by Flywheel) — recreate locally, do not commit
+wordpress/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Node (if added later)
+node_modules/
+
+# Logs / temp
+*.log
+.env
+.env.*
+
+# HeraSpec local memory database
+heraspec/memory/*.db
+heraspec/memory/*.sqlite
