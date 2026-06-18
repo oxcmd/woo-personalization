@@ -1,0 +1,59 @@
+.wcp-order-personalization--frontend {
+	margin-top: 0.75rem;
+	padding-top: 0.75rem;
+	border-top: 1px solid #e5e5e5;
+}
+
+.wcp-order-personalization--frontend .wcp-order-personalization-label {
+	margin: 0 0 0.5rem;
+	font-size: 0.95rem;
+}
+
+.wcp-order-personalization--frontend .wcp-order-mockup {
+	margin: 0;
+}
+
+.wcp-order-personalization--frontend .wcp-order-mockup-thumb {
+	max-width: 140px;
+	height: auto;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	display: block;
+}
+
+.wcp-order-personalization-unavailable {
+	margin: 0;
+	font-size: 0.9rem;
+	color: #646970;
+}
+
+.wcp-orders-list-personalization {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+}
+
+.wcp-orders-list-thumb {
+	width: 40px;
+	height: 40px;
+	object-fit: cover;
+	border: 1px solid #c3c4c7;
+	border-radius: 3px;
+	display: block;
+	background: #fff;
+}
+
+.wcp-orders-list-personalization--badge {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #f0f0f1;
+	color: #2271b1;
+}
+
+.wcp-orders-list-personalization--badge .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}

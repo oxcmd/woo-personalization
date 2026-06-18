@@ -349,6 +349,51 @@ class WCP_Cart_Order {
 	}
 
 	/**
+	 * Whether an order contains at least one personalized line item.
+	 *
+	 * @param WC_Order $order Order object.
+	 * @return bool
+	 */
+	public static function order_has_personalization( $order ) {
+		if ( ! $order instanceof WC_Order ) {
+			return false;
+		}
+
+		foreach ( $order->get_items() as $item ) {
+			if ( $item instanceof WC_Order_Item_Product && 'yes' === $item->get_meta( '_wcp_personalized' ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the first available mockup URL from personalized items in an order.
+	 *
+	 * @param WC_Order $order Order object.
+	 * @return string|false
+	 */
+	public static function get_first_order_mockup_url( $order ) {
+		if ( ! $order instanceof WC_Order ) {
+			return false;
+		}
+
+		foreach ( $order->get_items() as $item ) {
+			if ( ! $item instanceof WC_Order_Item_Product || 'yes' !== $item->get_meta( '_wcp_personalized' ) ) {
+				continue;
+			}
+
+			$mockup_url = self::get_order_mockup_url( $item );
+			if ( $mockup_url ) {
+				return $mockup_url;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get order item mockup URL for admin display.
 	 *
 	 * @param WC_Order_Item_Product $item Order item.
