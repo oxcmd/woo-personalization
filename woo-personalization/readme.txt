@@ -4,7 +4,7 @@ Tags: woocommerce, personalization, t-shirt, mockup, custom product
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,8 @@ Woo Personalization adds product-level t-shirt customization for WooCommerce:
 * Customer image upload with live mockup preview
 * Composite mockup and original upload stored on order line items
 * Admin order view with mockup thumbnail and secure download
+* Customer order pages and emails with mockup preview
+* Admin and My Account orders list Design column
 
 == Installation ==
 
@@ -39,6 +41,11 @@ Yes. PHP GD is used to composite customer uploads onto mockup images.
 Yes. The plugin declares compatibility with WooCommerce custom order tables.
 
 == Changelog ==
+
+= 1.1.0 =
+* My Account orders list Design column with mockup thumbnail
+* Mockup preview in WooCommerce order confirmation emails
+* README and GitHub Actions PHP lint workflow
 
 = 1.0.0 =
 * Initial release
