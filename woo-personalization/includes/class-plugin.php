@@ -53,6 +53,8 @@ class WCP_Plugin {
 		require_once WCP_PLUGIN_DIR . 'includes/class-admin-order.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-admin-orders-list.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-frontend-order.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-frontend-orders-list.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-order-email.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-cleanup.php';
 	}
 
@@ -76,6 +78,8 @@ class WCP_Plugin {
 		WCP_Admin_Order::init();
 		WCP_Admin_Orders_List::init();
 		WCP_Frontend_Order::init();
+		WCP_Frontend_Orders_List::init();
+		WCP_Order_Email::init();
 		WCP_Cleanup::init();
 	}
 

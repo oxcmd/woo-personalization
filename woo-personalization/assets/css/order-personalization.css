@@ -57,3 +57,31 @@
 	width: 16px;
 	height: 16px;
 }
+
+.wcp-my-account-design {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+}
+
+.wcp-my-account-design-thumb {
+	width: 48px;
+	height: 48px;
+	object-fit: cover;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	display: block;
+	background: #fff;
+}
+
+.wcp-my-account-design--badge {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #f0f0f1;
+	color: #2271b1;
+	font-size: 14px;
+	line-height: 28px;
+	text-align: center;
+}
