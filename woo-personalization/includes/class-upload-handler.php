@@ -42,13 +42,13 @@ class WCP_Upload_Handler {
 			wp_send_json_error( array( 'message' => __( 'Upload failed. Please try again.', 'woo-personalization' ) ), 400 );
 		}
 
-		if ( (int) $file['size'] > WCP_MAX_UPLOAD_BYTES ) {
+		if ( (int) $file['size'] > WCP_Settings::get_max_upload_bytes() ) {
 			wp_send_json_error(
 				array(
 					'message' => sprintf(
 						/* translators: %s: max file size */
 						__( 'File exceeds maximum size of %s.', 'woo-personalization' ),
-						size_format( WCP_MAX_UPLOAD_BYTES )
+						size_format( WCP_Settings::get_max_upload_bytes() )
 					),
 				),
 				400
@@ -103,15 +103,20 @@ class WCP_Upload_Handler {
 		set_transient( 'wcp_upload_' . $token, $meta, DAY_IN_SECONDS );
 
 		$upload_base = WCP_Plugin::get_upload_base_url();
-
-		wp_send_json_success(
-			array(
-				'token'       => $token,
-				'preview_url' => trailingslashit( $upload_base ) . WCP_TEMP_DIR . '/' . rawurlencode( $token ) . '/mockup.png',
-				'print_area'  => $print_area,
-				'default_fit' => $default_fit,
-			)
+		$response    = array(
+			'token'       => $token,
+			'preview_url' => trailingslashit( $upload_base ) . WCP_TEMP_DIR . '/' . rawurlencode( $token ) . '/mockup.png',
+			'print_area'  => $print_area,
+			'default_fit' => $default_fit,
 		);
+
+		$dpi = WCP_Dpi_Checker::evaluate( $original_path, $template_id, $print_area );
+		if ( is_array( $dpi ) && ! empty( $dpi['is_low'] ) ) {
+			$response['dpi_warning']      = $dpi['message'];
+			$response['effective_dpi']    = (int) $dpi['effective_dpi'];
+		}
+
+		wp_send_json_success( $response );
 	}
 
 	/**

@@ -44,7 +44,7 @@
 	}
 
 	function setStatus(message, type) {
-		$status.text(message || '').removeClass('is-error is-success');
+		$status.text(message || '').removeClass('is-error is-success is-warning');
 		if (type) {
 			$status.addClass('is-' + type);
 		}
@@ -100,7 +100,11 @@
 					$designImage.attr('src', '').removeClass('is-visible');
 					$printGuide.hide();
 				}
-				setStatus(config.i18n.uploadSuccess, 'success');
+				if (response.data.dpi_warning) {
+					setStatus(response.data.dpi_warning, 'warning');
+				} else {
+					setStatus(config.i18n.uploadSuccess, 'success');
+				}
 			})
 			.fail(function () {
 				setStatus(config.i18n.uploadError, 'error');

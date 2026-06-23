@@ -74,6 +74,10 @@
 	color: #007017;
 }
 
+.wcp-status.is-warning {
+	color: #996800;
+}
+
 .wcp-cart-mockup-thumb {
 	max-width: 80px;
 	height: auto;
