@@ -14,6 +14,8 @@ WooCommerce plugin for **t-shirt (and apparel) personalization**: customers uplo
 - **Customer order views** — mockup on Thank you page, View order, and My Account orders list
 - **Order emails** — mockup preview in HTML confirmation emails
 - **Admin orders list** — Design column with thumbnail for personalized orders
+- **Settings** — upload size, recommended DPI, low-resolution warnings
+- **Admin ZIP export** — download all design files for an order in one click
 - **Admin order detail** — mockup preview + secure download of original file
 - **HPOS compatible** — works with WooCommerce High-Performance Order Storage
 

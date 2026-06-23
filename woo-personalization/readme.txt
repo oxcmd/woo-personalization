@@ -4,7 +4,7 @@ Tags: woocommerce, personalization, t-shirt, mockup, custom product
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,11 +36,20 @@ Woo Personalization adds product-level t-shirt customization for WooCommerce:
 
 Yes. PHP GD is used to composite customer uploads onto mockup images.
 
+= What about ZIP downloads? =
+
+Admin order ZIP export requires the PHP ZipArchive extension.
+
 = Is HPOS supported? =
 
 Yes. The plugin declares compatibility with WooCommerce custom order tables.
 
 == Changelog ==
+
+= 1.2.0 =
+* WooCommerce Settings → Personalization tab (upload limit, DPI threshold)
+* Low-resolution upload warning on the product page
+* Admin one-click ZIP download for all order personalization files
 
 = 1.1.0 =
 * My Account orders list Design column with mockup thumbnail
