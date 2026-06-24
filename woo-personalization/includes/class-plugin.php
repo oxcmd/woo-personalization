@@ -58,6 +58,8 @@ class WCP_Plugin {
 		require_once WCP_PLUGIN_DIR . 'includes/class-settings.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-dpi-checker.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-admin-order-zip.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-admin-dashboard.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-system-status.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-cleanup.php';
 	}
 
@@ -85,6 +87,8 @@ class WCP_Plugin {
 		WCP_Order_Email::init();
 		WCP_Settings::init();
 		WCP_Admin_Order_Zip::init();
+		WCP_Admin_Dashboard::init();
+		WCP_System_Status::init();
 		WCP_Cleanup::init();
 	}
 
