@@ -1,5 +1,7 @@
 # Woo Personalization
 
+> Plugin source lives in this folder. **Project hub:** [repository README](../README.md) · [Contributing](../CONTRIBUTING.md) · [AGENTS.md](../AGENTS.md) · [Architecture](../docs/ARCHITECTURE.md)
+
 WooCommerce plugin for **t-shirt (and apparel) personalization**: customers upload a design, preview it on a mockup, and files are attached to the order for production.
 
 [![PHP Lint](https://github.com/oxcmd/woo-personalization/actions/workflows/php-lint.yml/badge.svg)](https://github.com/oxcmd/woo-personalization/actions/workflows/php-lint.yml)
