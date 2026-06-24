@@ -4,7 +4,7 @@ Tags: woocommerce, personalization, t-shirt, mockup, custom product
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,11 @@ Admin order ZIP export requires the PHP ZipArchive extension.
 Yes. The plugin declares compatibility with WooCommerce custom order tables.
 
 == Changelog ==
+
+= 1.3.0 =
+* Plain shirt / Your design compare toggle on the product preview
+* WordPress dashboard widget for recent personalized orders
+* WooCommerce System Status health checks for the plugin
 
 = 1.2.0 =
 * WooCommerce Settings → Personalization tab (upload limit, DPI threshold)

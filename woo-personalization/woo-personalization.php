@@ -3,7 +3,7 @@
  * Plugin Name:       Woo Personalization
  * Plugin URI:        https://github.com/oxcmd/woo-personalization
  * Description:       Let customers upload images and preview personalized t-shirt mockups on WooCommerce product pages.
- * Version:           1.2.0
+ * Version:           1.3.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Daily Builder
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WCP_VERSION', '1.2.0' );
+define( 'WCP_VERSION', '1.3.0' );
 define( 'WCP_PLUGIN_FILE', __FILE__ );
 define( 'WCP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WCP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
