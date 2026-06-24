@@ -11,6 +11,11 @@
 	var $printGuide = $('#wcp-print-area-guide');
 	var $removeBtn = $('#wcp-remove-design');
 	var $form = $('form.cart');
+	var $baseImage = $('#wcp-base-image');
+	var $compareToggle = $('#wcp-compare-toggle');
+	var plainMockupUrl = $baseImage.data('plain-src') || '';
+	var designedMockupUrl = '';
+	var previewMode = 'design';
 
 	function getPrintArea() {
 		return {
@@ -56,10 +61,26 @@
 		$designImage.attr('src', '').removeClass('is-visible');
 		$removeBtn.prop('hidden', true);
 		$printGuide.show();
-		if (config.config && config.config.base_url) {
-			$('.wcp-base-image').attr('src', config.config.base_url);
+		designedMockupUrl = '';
+		$compareToggle.prop('hidden', true);
+		$compareToggle.find('.wcp-compare-btn').removeClass('is-active');
+		$compareToggle.find('[data-mode="design"]').addClass('is-active');
+		previewMode = 'design';
+		if (plainMockupUrl) {
+			$baseImage.attr('src', plainMockupUrl);
 		}
 		setStatus('');
+	}
+
+	function setPreviewMode(mode) {
+		if (!designedMockupUrl) {
+			return;
+		}
+
+		previewMode = mode === 'plain' ? 'plain' : 'design';
+		$compareToggle.find('.wcp-compare-btn').removeClass('is-active');
+		$compareToggle.find('[data-mode="' + previewMode + '"]').addClass('is-active');
+		$baseImage.attr('src', previewMode === 'plain' ? plainMockupUrl : designedMockupUrl);
 	}
 
 	function showLocalPreview(file) {
@@ -96,7 +117,9 @@
 
 				$tokenInput.val(response.data.token);
 				if (response.data.preview_url) {
-					$('.wcp-base-image').attr('src', response.data.preview_url);
+					designedMockupUrl = response.data.preview_url;
+					setPreviewMode('design');
+					$compareToggle.prop('hidden', false);
 					$designImage.attr('src', '').removeClass('is-visible');
 					$printGuide.hide();
 				}
@@ -130,6 +153,10 @@
 
 	$removeBtn.on('click', function () {
 		resetDesign();
+	});
+
+	$compareToggle.on('click', '.wcp-compare-btn', function () {
+		setPreviewMode($(this).data('mode'));
 	});
 
 	if ($form.length) {

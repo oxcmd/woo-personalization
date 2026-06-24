@@ -55,6 +55,25 @@
 	gap: 0.5rem;
 }
 
+.wcp-compare-toggle {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.wcp-compare-label {
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.wcp-compare-btn.is-active {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+
 .wcp-upload-label input[type="file"] {
 	display: block;
 	margin-top: 0.35rem;
