@@ -11,14 +11,15 @@ Maintained by [@oxcmd](https://github.com/oxcmd). Priorities may shift based on 
 - [x] Admin production tools (downloads, ZIP, dashboard widget)
 - [x] DPI warning + settings tab
 - [x] Compare plain vs design preview
+- [x] REST API order + line item personalization fields
+- [x] WooCommerce Blocks cart mockup images
+- [x] Admin filter for personalized orders
 
 ## Next (open for PRs)
 
 - [ ] **Interactive design positioning** — drag/scale design inside print area before checkout
 - [ ] **Text layer** — add custom text on mockup
-- [ ] **REST API** — read order personalization metadata for external fulfillment
 - [ ] **PHPUnit tests** — upload validation, DPI checker, file finalization
-- [ ] **WooCommerce Blocks** — cart block mockup display parity
 
 ## Icebox
 

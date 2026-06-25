@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-06-24
+
+### Added
+- REST API fields on orders and line items for fulfillment integrations
+- WooCommerce Blocks cart mockup image parity
+- Admin orders filter: personalized orders only
+- Private production order notes on checkout
+
 ## [1.3.0] - 2026-06-24
 
 ### Added
@@ -34,7 +42,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Initial release: mockup templates, product personalization, upload preview, cart/order persistence, admin order UI
 
-[Unreleased]: https://github.com/oxcmd/woo-personalization/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/oxcmd/woo-personalization/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.4.0
 [1.3.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.3.0
 [1.2.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.2.0
 [1.1.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.1.0
