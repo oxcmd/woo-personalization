@@ -20,7 +20,9 @@ class WCP_Cart_Order {
 		add_filter( 'woocommerce_get_item_data', array( __CLASS__, 'display_cart_item_data' ), 10, 2 );
 		add_action( 'woocommerce_checkout_create_order_line_item', array( __CLASS__, 'add_order_line_item_meta' ), 10, 4 );
 		add_action( 'woocommerce_checkout_order_processed', array( __CLASS__, 'finalize_order_files' ), 10, 3 );
+		add_action( 'woocommerce_checkout_order_processed', array( __CLASS__, 'mark_order_personalization' ), 15, 3 );
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( __CLASS__, 'finalize_order_files_from_store_api' ), 10, 1 );
+		add_action( 'woocommerce_store_api_checkout_order_processed', array( __CLASS__, 'mark_order_personalization_from_store_api' ), 15, 1 );
 		add_action( 'woocommerce_order_status_processing', array( __CLASS__, 'finalize_order_files_by_id' ), 10, 1 );
 		add_action( 'woocommerce_order_status_completed', array( __CLASS__, 'finalize_order_files_by_id' ), 10, 1 );
 		add_action( 'woocommerce_order_status_on-hold', array( __CLASS__, 'finalize_order_files_by_id' ), 10, 1 );
@@ -38,6 +40,40 @@ class WCP_Cart_Order {
 		}
 
 		self::finalize_order_files( $order->get_id(), array(), $order );
+	}
+
+	/**
+	 * Flag personalized orders for admin filtering after classic checkout.
+	 *
+	 * @param int           $order_id    Order ID.
+	 * @param array         $posted_data Posted checkout data.
+	 * @param WC_Order|null $order       Order object.
+	 */
+	public static function mark_order_personalization( $order_id, $posted_data, $order ) {
+		unset( $posted_data );
+
+		if ( ! $order instanceof WC_Order ) {
+			$order = wc_get_order( $order_id );
+		}
+
+		if ( $order ) {
+			WCP_Admin_Orders_Filter::flag_order( $order );
+			$order->save();
+		}
+	}
+
+	/**
+	 * Flag personalized orders after block checkout.
+	 *
+	 * @param WC_Order $order Order object.
+	 */
+	public static function mark_order_personalization_from_store_api( $order ) {
+		if ( ! $order instanceof WC_Order ) {
+			return;
+		}
+
+		WCP_Admin_Orders_Filter::flag_order( $order );
+		$order->save();
 	}
 
 	/**
