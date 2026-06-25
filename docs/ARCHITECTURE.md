@@ -22,6 +22,10 @@ WCP_Plugin (orchestrator)
 ├── WCP_Settings            WooCommerce settings tab
 ├── WCP_Dpi_Checker         Print quality estimation
 ├── WCP_System_Status       WooCommerce status report
+├── WCP_Rest_Api            WooCommerce REST personalization fields
+├── WCP_Store_Api           Blocks / Store API cart images
+├── WCP_Admin_Orders_Filter Admin personalized orders filter
+├── WCP_Order_Notes         Production notes on checkout
 └── WCP_Cleanup             Cron temp file cleanup
 ```
 

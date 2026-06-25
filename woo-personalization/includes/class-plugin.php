@@ -60,6 +60,10 @@ class WCP_Plugin {
 		require_once WCP_PLUGIN_DIR . 'includes/class-admin-order-zip.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-admin-dashboard.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-system-status.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-rest-api.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-store-api.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-admin-orders-filter.php';
+		require_once WCP_PLUGIN_DIR . 'includes/class-order-notes.php';
 		require_once WCP_PLUGIN_DIR . 'includes/class-cleanup.php';
 	}
 
@@ -89,6 +93,10 @@ class WCP_Plugin {
 		WCP_Admin_Order_Zip::init();
 		WCP_Admin_Dashboard::init();
 		WCP_System_Status::init();
+		WCP_Rest_Api::init();
+		WCP_Store_Api::init();
+		WCP_Admin_Orders_Filter::init();
+		WCP_Order_Notes::init();
 		WCP_Cleanup::init();
 	}
 
