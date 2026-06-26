@@ -47,7 +47,7 @@ class WCP_Frontend_Order {
 	public static function render_order_item_personalization( $item_id, $item, $order, $plain_text ) {
 		unset( $item_id, $order );
 
-		if ( $plain_text || is_admin() || self::is_order_email_context() ) {
+		if ( $plain_text || is_admin() || WCP_Plugin::is_rendering_order_email() ) {
 			return;
 		}
 
@@ -74,14 +74,5 @@ class WCP_Frontend_Order {
 		}
 
 		echo '</div>';
-	}
-
-	/**
-	 * Whether WooCommerce is rendering an order email (handled separately).
-	 *
-	 * @return bool
-	 */
-	private static function is_order_email_context() {
-		return doing_action( 'woocommerce_email_order_details' ) || doing_action( 'woocommerce_email_before_order_table' ) || doing_action( 'woocommerce_email_after_order_table' );
 	}
 }

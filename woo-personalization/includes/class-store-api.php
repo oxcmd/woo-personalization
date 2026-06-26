@@ -42,7 +42,7 @@ class WCP_Store_Api {
 		}
 
 		return array(
-			array(
+			(object) array(
 				'id'        => 0,
 				'src'       => $mockup_url,
 				'thumbnail' => $mockup_url,

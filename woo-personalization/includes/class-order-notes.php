@@ -12,6 +12,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class WCP_Order_Notes {
 
+	const NOTE_FLAG = '_wcp_production_note_added';
+
 	/**
 	 * Init hooks.
 	 */
@@ -56,6 +58,10 @@ class WCP_Order_Notes {
 			return;
 		}
 
+		if ( 'yes' === $order->get_meta( self::NOTE_FLAG ) ) {
+			return;
+		}
+
 		$count = 0;
 		foreach ( $order->get_items() as $item ) {
 			if ( $item instanceof WC_Order_Item_Product && 'yes' === $item->get_meta( '_wcp_personalized' ) ) {
@@ -81,5 +87,8 @@ class WCP_Order_Notes {
 			false,
 			true
 		);
+
+		$order->update_meta_data( self::NOTE_FLAG, 'yes' );
+		$order->save();
 	}
 }

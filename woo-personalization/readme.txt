@@ -4,7 +4,7 @@ Tags: woocommerce, personalization, t-shirt, mockup, custom product
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,15 @@ Admin order ZIP export requires the PHP ZipArchive extension.
 Yes. The plugin declares compatibility with WooCommerce custom order tables.
 
 == Changelog ==
+
+= 1.4.1 =
+* Fix REST API line item fields, Blocks cart images, admin filter backfill, duplicate production notes, email mockup context
+
+= 1.4.0 =
+* REST API fields on orders and line items for fulfillment integrations
+* WooCommerce Blocks cart mockup image parity
+* Admin orders filter: personalized orders only
+* Private production order notes on checkout
 
 = 1.3.0 =
 * Plain shirt / Your design compare toggle on the product preview

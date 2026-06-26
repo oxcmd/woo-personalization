@@ -220,6 +220,9 @@ class WCP_Cart_Order {
 
 			self::finalize_item_files( $order, $item );
 		}
+
+		WCP_Admin_Orders_Filter::flag_order( $order );
+		$order->save();
 	}
 
 	/**

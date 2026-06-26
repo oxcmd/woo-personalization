@@ -40,6 +40,12 @@ class WCP_Admin_Order {
 			return;
 		}
 
+		$order = wc_get_order( $item->get_order_id() );
+		if ( $order instanceof WC_Order && WCP_Cart_Order::order_has_personalization( $order ) && 'yes' !== $order->get_meta( WCP_Admin_Orders_Filter::ORDER_META_FLAG ) ) {
+			WCP_Admin_Orders_Filter::flag_order( $order );
+			$order->save();
+		}
+
 		$mockup_url = WCP_Cart_Order::get_order_mockup_url( $item );
 		$order_id   = $item->get_order_id();
 		$original   = self::get_download_url( $order_id, $item_id, 'original' );

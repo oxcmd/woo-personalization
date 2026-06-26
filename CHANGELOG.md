@@ -6,6 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-06-24
+
+### Fixed
+- REST API line item personalization now appears on order `line_items` responses
+- Blocks cart image filter returns Store API image objects
+- Admin personalized-order filter backfills legacy orders missing order meta flag
+- Production order notes no longer duplicate on reprocessed checkout hooks
+- Order email mockup detection uses reliable email header/footer context
+
 ## [1.4.0] - 2026-06-24
 
 ### Added
@@ -42,7 +51,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Initial release: mockup templates, product personalization, upload preview, cart/order persistence, admin order UI
 
-[Unreleased]: https://github.com/oxcmd/woo-personalization/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/oxcmd/woo-personalization/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.4.1
 [1.4.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.4.0
 [1.3.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.3.0
 [1.2.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.2.0

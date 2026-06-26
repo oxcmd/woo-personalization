@@ -126,6 +126,15 @@ class WCP_Plugin {
 	}
 
 	/**
+	 * Whether WooCommerce is rendering an order email body (not thank-you / view-order).
+	 *
+	 * @return bool
+	 */
+	public static function is_rendering_order_email() {
+		return did_action( 'woocommerce_email_header' ) && ! did_action( 'woocommerce_email_footer' );
+	}
+
+	/**
 	 * Admin notice when WooCommerce is missing.
 	 */
 	public function woocommerce_missing_notice() {

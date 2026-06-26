@@ -30,7 +30,7 @@ class WCP_Order_Email {
 	public static function render_item_mockup( $item_id, $item, $order, $plain_text ) {
 		unset( $item_id, $order );
 
-		if ( ! self::is_order_email_context() ) {
+		if ( ! WCP_Plugin::is_rendering_order_email() ) {
 			return;
 		}
 
@@ -54,14 +54,5 @@ class WCP_Order_Email {
 			esc_html__( 'Your custom design', 'woo-personalization' ),
 			esc_url( $mockup_url )
 		);
-	}
-
-	/**
-	 * Whether WooCommerce is currently rendering an order email.
-	 *
-	 * @return bool
-	 */
-	private static function is_order_email_context() {
-		return doing_action( 'woocommerce_email_order_details' ) || doing_action( 'woocommerce_email_before_order_table' ) || doing_action( 'woocommerce_email_after_order_table' );
 	}
 }
