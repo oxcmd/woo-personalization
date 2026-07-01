@@ -19,6 +19,7 @@ WooCommerce plugin for **t-shirt (and apparel) personalization**: customers uplo
 - **Settings** — upload size, recommended DPI, low-resolution warnings
 - **Admin ZIP export** — download all design files for an order in one click
 - **Compare preview** — toggle plain shirt vs personalized mockup on the product page
+- **Design editor** — drag and scale your upload inside the print area before checkout
 - **Dashboard widget** — recent personalized orders at a glance
 - **Admin order detail** — mockup preview + secure download of original file
 - **HPOS compatible** — works with WooCommerce High-Performance Order Storage

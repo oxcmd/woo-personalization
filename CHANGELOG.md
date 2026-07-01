@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-06-24
+
+### Added
+- Interactive design editor on the product page: drag to reposition, slider to scale
+- Server-side mockup re-composite via `wcp_update_design` AJAX
+- Design transform stored on cart/order meta and REST API responses
+
 ## [1.4.1] - 2026-06-24
 
 ### Fixed
@@ -51,7 +58,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Initial release: mockup templates, product personalization, upload preview, cart/order persistence, admin order UI
 
-[Unreleased]: https://github.com/oxcmd/woo-personalization/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/oxcmd/woo-personalization/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.5.0
 [1.4.1]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.4.1
 [1.4.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.4.0
 [1.3.0]: https://github.com/oxcmd/woo-personalization/releases/tag/v1.3.0

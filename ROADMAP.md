@@ -14,10 +14,10 @@ Maintained by [@oxcmd](https://github.com/oxcmd). Priorities may shift based on 
 - [x] REST API order + line item personalization fields
 - [x] WooCommerce Blocks cart mockup images
 - [x] Admin filter for personalized orders
+- [x] Interactive design positioning (drag + scale in print area)
 
 ## Next (open for PRs)
 
-- [ ] **Interactive design positioning** — drag/scale design inside print area before checkout
 - [ ] **Text layer** — add custom text on mockup
 - [ ] **PHPUnit tests** — upload validation, DPI checker, file finalization
 
