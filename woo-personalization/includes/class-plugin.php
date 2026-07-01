@@ -273,4 +273,20 @@ class WCP_Plugin {
 			'height' => min( 100, max( 1, (float) ( $area['height'] ?? $defaults['height'] ) ) ),
 		);
 	}
+
+	/**
+	 * Sanitize customer design transform for compositing.
+	 *
+	 * @param array<string, mixed>|null $transform Raw transform values.
+	 * @return array{scale: float, offset_x: float, offset_y: float}
+	 */
+	public static function sanitize_design_transform( $transform ) {
+		$transform = is_array( $transform ) ? $transform : array();
+
+		return array(
+			'scale'    => max( 0.5, min( 2.0, (float) ( $transform['scale'] ?? 1.0 ) ) ),
+			'offset_x' => max( -50, min( 50, (float) ( $transform['offset_x'] ?? 0 ) ) ),
+			'offset_y' => max( -50, min( 50, (float) ( $transform['offset_y'] ?? 0 ) ) ),
+		);
+	}
 }

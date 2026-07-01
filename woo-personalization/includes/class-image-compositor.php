@@ -20,9 +20,10 @@ class WCP_Image_Compositor {
 	 * @param array<string, float> $print_area  Print area in percentages.
 	 * @param string               $fit         cover|contain.
 	 * @param string               $output_path Output file path.
+	 * @param array<string, float> $transform   Optional scale and offset adjustments.
 	 * @return true|WP_Error
 	 */
-	public function composite( $base_path, $overlay_path, $print_area, $fit, $output_path ) {
+	public function composite( $base_path, $overlay_path, $print_area, $fit, $output_path, $transform = array() ) {
 		if ( ! extension_loaded( 'gd' ) ) {
 			return new WP_Error( 'wcp_no_gd', __( 'GD extension is required for image processing.', 'woo-personalization' ) );
 		}
@@ -40,6 +41,7 @@ class WCP_Image_Compositor {
 		}
 
 		$print_area = WCP_Plugin::sanitize_print_area( $print_area );
+		$transform  = WCP_Plugin::sanitize_design_transform( $transform );
 		$fit        = 'contain' === $fit ? 'contain' : 'cover';
 
 		$bw = imagesx( $base );
@@ -59,7 +61,7 @@ class WCP_Image_Compositor {
 			return new WP_Error( 'wcp_invalid_dimensions', __( 'Invalid image dimensions for compositing.', 'woo-personalization' ) );
 		}
 
-		$scale = 'cover' === $fit ? max( $pw / $ow, $ph / $oh ) : min( $pw / $ow, $ph / $oh );
+		$scale = ( 'cover' === $fit ? max( $pw / $ow, $ph / $oh ) : min( $pw / $ow, $ph / $oh ) ) * $transform['scale'];
 		$nw    = max( 1, (int) round( $ow * $scale ) );
 		$nh    = max( 1, (int) round( $oh * $scale ) );
 
@@ -70,8 +72,8 @@ class WCP_Image_Compositor {
 		imagefill( $resized, 0, 0, $transparent );
 		imagecopyresampled( $resized, $overlay, 0, 0, 0, 0, $nw, $nh, $ow, $oh );
 
-		$dx = $px + (int) floor( ( $pw - $nw ) / 2 );
-		$dy = $py + (int) floor( ( $ph - $nh ) / 2 );
+		$dx = $px + (int) floor( ( $pw - $nw ) / 2 ) + (int) round( $transform['offset_x'] / 100 * $pw );
+		$dy = $py + (int) floor( ( $ph - $nh ) / 2 ) + (int) round( $transform['offset_y'] / 100 * $ph );
 
 		imagealphablending( $base, true );
 		imagecopy( $base, $resized, $dx, $dy, 0, 0, $nw, $nh );

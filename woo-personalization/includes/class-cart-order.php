@@ -109,13 +109,14 @@ class WCP_Cart_Order {
 		}
 
 		$cart_item_data['wcp_personalization'] = array(
-			'token'         => $token,
-			'template_id'   => (int) $data['template_id'],
-			'print_area'    => $data['print_area'],
-			'default_fit'   => $data['default_fit'],
-			'original_file' => $data['original_file'],
-			'mockup_file'   => $data['mockup_file'],
-			'unique_key'    => md5( $token . microtime( true ) ),
+			'token'            => $token,
+			'template_id'      => (int) $data['template_id'],
+			'print_area'       => $data['print_area'],
+			'default_fit'      => $data['default_fit'],
+			'original_file'    => $data['original_file'],
+			'mockup_file'      => $data['mockup_file'],
+			'design_transform' => isset( $data['design_transform'] ) ? $data['design_transform'] : WCP_Plugin::sanitize_design_transform( array() ),
+			'unique_key'       => md5( $token . microtime( true ) ),
 		);
 
 		return $cart_item_data;
@@ -188,6 +189,9 @@ class WCP_Cart_Order {
 		$item->add_meta_data( '_wcp_print_area', wp_json_encode( $personalization['print_area'] ), true );
 		$item->add_meta_data( '_wcp_original_file', sanitize_file_name( $personalization['original_file'] ), true );
 		$item->add_meta_data( '_wcp_mockup_file', sanitize_file_name( $personalization['mockup_file'] ), true );
+		if ( ! empty( $personalization['design_transform'] ) ) {
+			$item->add_meta_data( '_wcp_design_transform', wp_json_encode( WCP_Plugin::sanitize_design_transform( $personalization['design_transform'] ) ), true );
+		}
 		$item->add_meta_data( '_wcp_personalized', 'yes', true );
 	}
 

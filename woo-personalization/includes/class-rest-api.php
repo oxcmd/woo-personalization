@@ -54,11 +54,12 @@ class WCP_Rest_Api {
 
 				$mockup_url = WCP_Cart_Order::get_order_mockup_url( $item );
 				$data['line_items'][ $index ]['wcp_personalization'] = array(
-					'personalized' => true,
-					'template_id'  => (int) $item->get_meta( '_wcp_template_id' ),
-					'mockup_url'   => $mockup_url ? $mockup_url : null,
-					'has_original' => (bool) WCP_Cart_Order::get_order_original_path( $item ),
-					'has_mockup'   => (bool) WCP_Cart_Order::get_order_mockup_path( $item ),
+					'personalized'     => true,
+					'template_id'      => (int) $item->get_meta( '_wcp_template_id' ),
+					'mockup_url'       => $mockup_url ? $mockup_url : null,
+					'has_original'     => (bool) WCP_Cart_Order::get_order_original_path( $item ),
+					'has_mockup'       => (bool) WCP_Cart_Order::get_order_mockup_path( $item ),
+					'design_transform' => self::get_item_design_transform( $item ),
 				);
 			}
 		}
@@ -84,5 +85,25 @@ class WCP_Rest_Api {
 		}
 
 		return $count;
+	}
+
+	/**
+	 * Decode stored design transform from an order item.
+	 *
+	 * @param WC_Order_Item_Product $item Order item.
+	 * @return array{scale: float, offset_x: float, offset_y: float}|null
+	 */
+	private static function get_item_design_transform( $item ) {
+		$raw = (string) $item->get_meta( '_wcp_design_transform' );
+		if ( ! $raw ) {
+			return null;
+		}
+
+		$decoded = json_decode( $raw, true );
+		if ( ! is_array( $decoded ) ) {
+			return null;
+		}
+
+		return WCP_Plugin::sanitize_design_transform( $decoded );
 	}
 }

@@ -72,6 +72,7 @@ class WCP_Frontend {
 					'required'       => __( 'Please upload a design before adding to cart.', 'woo-personalization' ),
 					'invalidType'    => __( 'Please choose a JPG, PNG, or WebP image.', 'woo-personalization' ),
 					'lowDpiWarning'  => __( 'Low resolution image', 'woo-personalization' ),
+					'positionHint'   => __( 'Drag to reposition and use the slider to resize your design.', 'woo-personalization' ),
 				),
 			)
 		);

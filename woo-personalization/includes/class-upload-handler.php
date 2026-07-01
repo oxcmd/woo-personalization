@@ -12,7 +12,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class WCP_Upload_Handler {
 
-	const AJAX_ACTION = 'wcp_upload_image';
+	const AJAX_ACTION        = 'wcp_upload_image';
+	const UPDATE_ACTION      = 'wcp_update_design';
 
 	/**
 	 * Init hooks.
@@ -20,6 +21,8 @@ class WCP_Upload_Handler {
 	public static function init() {
 		add_action( 'wp_ajax_' . self::AJAX_ACTION, array( __CLASS__, 'handle_upload' ) );
 		add_action( 'wp_ajax_nopriv_' . self::AJAX_ACTION, array( __CLASS__, 'handle_upload' ) );
+		add_action( 'wp_ajax_' . self::UPDATE_ACTION, array( __CLASS__, 'handle_update_design' ) );
+		add_action( 'wp_ajax_nopriv_' . self::UPDATE_ACTION, array( __CLASS__, 'handle_update_design' ) );
 	}
 
 	/**
@@ -79,10 +82,11 @@ class WCP_Upload_Handler {
 
 		$print_area  = WCP_Template_CPT::get_effective_print_area( $product_id, $template_id );
 		$default_fit = WCP_Template_CPT::get_default_fit( $template_id );
+		$transform   = self::get_transform_from_request();
 		$mockup_path = trailingslashit( $temp_dir ) . 'mockup.png';
 
 		$compositor = new WCP_Image_Compositor();
-		$result     = $compositor->composite( $base_path, $original_path, $print_area, $default_fit, $mockup_path );
+		$result     = $compositor->composite( $base_path, $original_path, $print_area, $default_fit, $mockup_path, $transform );
 
 		if ( is_wp_error( $result ) ) {
 			self::delete_directory( $temp_dir );
@@ -97,6 +101,7 @@ class WCP_Upload_Handler {
 			'original_file' => $original_name,
 			'mockup_file'   => 'mockup.png',
 			'created'       => time(),
+			'design_transform' => $transform,
 		);
 
 		file_put_contents( trailingslashit( $temp_dir ) . 'meta.json', wp_json_encode( $meta ) );
@@ -117,6 +122,105 @@ class WCP_Upload_Handler {
 		}
 
 		wp_send_json_success( $response );
+	}
+
+	/**
+	 * Re-composite mockup after customer adjusts position or scale.
+	 */
+	public static function handle_update_design() {
+		check_ajax_referer( 'wcp_upload', 'nonce' );
+
+		$token      = isset( $_POST['token'] ) ? sanitize_key( wp_unslash( $_POST['token'] ) ) : '';
+		$product_id = isset( $_POST['product_id'] ) ? absint( $_POST['product_id'] ) : 0;
+		$transform  = self::get_transform_from_request();
+
+		if ( empty( $token ) || ! $product_id ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid design update request.', 'woo-personalization' ) ), 400 );
+		}
+
+		$result = self::regenerate_mockup( $token, $product_id, $transform );
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( array( 'message' => $result->get_error_message() ), 400 );
+		}
+
+		wp_send_json_success( $result );
+	}
+
+	/**
+	 * Rebuild mockup.png for an existing upload token.
+	 *
+	 * @param string               $token      Upload token.
+	 * @param int                  $product_id Product ID for validation.
+	 * @param array<string, float> $transform  Design transform.
+	 * @return array<string, mixed>|WP_Error
+	 */
+	public static function regenerate_mockup( $token, $product_id, $transform ) {
+		$token = sanitize_key( $token );
+		$data  = self::get_upload_data( $token );
+
+		if ( ! $data || (int) $data['product_id'] !== (int) $product_id ) {
+			return new WP_Error( 'wcp_invalid_token', __( 'Upload session not found or expired.', 'woo-personalization' ) );
+		}
+
+		$temp_dir      = self::resolve_token_dir( $token );
+		$original_path = trailingslashit( $temp_dir ) . sanitize_file_name( $data['original_file'] );
+		$mockup_path   = trailingslashit( $temp_dir ) . 'mockup.png';
+		$base_path     = WCP_Template_CPT::get_base_image_path( (int) $data['template_id'] );
+
+		if ( ! $base_path || ! file_exists( $original_path ) ) {
+			return new WP_Error( 'wcp_missing_files', __( 'Design files are unavailable. Please upload again.', 'woo-personalization' ) );
+		}
+
+		$transform  = WCP_Plugin::sanitize_design_transform( $transform );
+		$compositor = new WCP_Image_Compositor();
+		$result     = $compositor->composite(
+			$base_path,
+			$original_path,
+			$data['print_area'],
+			$data['default_fit'],
+			$mockup_path,
+			$transform
+		);
+
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		$data['design_transform'] = $transform;
+		file_put_contents( trailingslashit( $temp_dir ) . 'meta.json', wp_json_encode( $data ) );
+		set_transient( 'wcp_upload_' . $token, $data, DAY_IN_SECONDS );
+
+		$upload_base = WCP_Plugin::get_upload_base_url();
+		$preview_url = trailingslashit( $upload_base ) . WCP_TEMP_DIR . '/' . rawurlencode( $token ) . '/mockup.png';
+
+		return array(
+			'token'       => $token,
+			'preview_url' => add_query_arg( 'v', (string) time(), $preview_url ),
+			'transform'   => $transform,
+		);
+	}
+
+	/**
+	 * Read design transform values from the current request.
+	 *
+	 * @return array{scale: float, offset_x: float, offset_y: float}
+	 */
+	private static function get_transform_from_request() {
+		$scale = isset( $_POST['scale'] ) ? (float) wp_unslash( $_POST['scale'] ) : 1.0;
+		if ( isset( $_POST['wcp_design_scale'] ) ) {
+			$scale = (float) wp_unslash( $_POST['wcp_design_scale'] );
+			if ( $scale > 2 ) {
+				$scale = $scale / 100;
+			}
+		}
+
+		return WCP_Plugin::sanitize_design_transform(
+			array(
+				'scale'    => $scale,
+				'offset_x' => isset( $_POST['offset_x'] ) ? (float) wp_unslash( $_POST['offset_x'] ) : ( isset( $_POST['wcp_design_offset_x'] ) ? (float) wp_unslash( $_POST['wcp_design_offset_x'] ) : 0 ),
+				'offset_y' => isset( $_POST['offset_y'] ) ? (float) wp_unslash( $_POST['offset_y'] ) : ( isset( $_POST['wcp_design_offset_y'] ) ? (float) wp_unslash( $_POST['wcp_design_offset_y'] ) : 0 ),
+			)
+		);
 	}
 
 	/**

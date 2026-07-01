@@ -39,6 +39,45 @@
 	display: block;
 }
 
+.wcp-design-overlay.is-editing {
+	cursor: grab;
+}
+
+.wcp-design-overlay.is-dragging-design {
+	cursor: grabbing;
+}
+
+.wcp-design-overlay.is-editing .wcp-design-image {
+	transform-origin: center center;
+	pointer-events: none;
+}
+
+.wcp-design-editor {
+	margin-bottom: 0.75rem;
+	padding: 0.75rem;
+	border: 1px dashed #c3c4c7;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.wcp-design-editor-help {
+	margin: 0 0 0.5rem;
+	font-size: 0.9rem;
+	color: #50575e;
+}
+
+.wcp-scale-label {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	font-size: 0.9rem;
+}
+
+.wcp-scale-label input[type="range"] {
+	width: 100%;
+	max-width: 280px;
+}
+
 .wcp-design-overlay.fit-contain .wcp-design-image {
 	object-fit: contain;
 }

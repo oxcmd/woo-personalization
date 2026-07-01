@@ -29,6 +29,14 @@ defined( 'ABSPATH' ) || exit;
 		<button type="button" class="button wcp-compare-btn is-active" data-mode="design"><?php esc_html_e( 'Your design', 'woo-personalization' ); ?></button>
 	</div>
 
+	<div class="wcp-design-editor" id="wcp-design-editor" hidden>
+		<p class="wcp-design-editor-help"><?php esc_html_e( 'Drag your design to reposition it. Use the slider to resize.', 'woo-personalization' ); ?></p>
+		<label class="wcp-scale-label">
+			<span><?php esc_html_e( 'Design size', 'woo-personalization' ); ?></span>
+			<input type="range" id="wcp-design-scale" min="50" max="200" value="100" step="1" />
+		</label>
+	</div>
+
 	<div class="wcp-controls">
 		<label class="wcp-upload-label">
 			<span><?php esc_html_e( 'Upload your design', 'woo-personalization' ); ?></span>
@@ -39,4 +47,7 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 
 	<input type="hidden" name="wcp_upload_token" id="wcp_upload_token" value="" />
+	<input type="hidden" name="wcp_design_scale" id="wcp_design_scale" value="1" />
+	<input type="hidden" name="wcp_design_offset_x" id="wcp_design_offset_x" value="0" />
+	<input type="hidden" name="wcp_design_offset_y" id="wcp_design_offset_y" value="0" />
 </div>
